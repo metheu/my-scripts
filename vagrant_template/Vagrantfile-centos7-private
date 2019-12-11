@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+
+Vagrant.configure("2") do |config|
+    config.vm.provision "shell", inline: <<-SHELL
+    echo "SSH-KEY-GOES-HERE" >> /home/vagrant/.ssh/authorized_keys
+    sudo systemctl restart sshd.service
+    SHELL
+
+    # config.vm.provision "shell", inline: <<-SHELL
+    # wget https://github.com/rancher/k3s/releases/download/v0.5.0/k3s -O /home/vagrant/k3s && sudo mv -v /home/vagrant/k3s /usr/bin/ && sudo chmod +x /usr/bin/k3s
+    # SHELL
+  
+    config.vm.define "VM-NAME" do |m|
+      m.vm.box = "bento/centos-7.5"
+      m.vm.hostname = "VM-NAME.local"
+      
+    
+      m.vm.network :"private_network", ip: "IP-ADDR-GOES-HERE"
+    
+      m.vm.provider :virtualbox do |v|
+        v.customize ["modifyvm", :id, "--memory", MEM-GOES-HERE]
+        v.customize ["modifyvm", :id, "--name", "VM-NAME"]
+      end
+    end
+  end
