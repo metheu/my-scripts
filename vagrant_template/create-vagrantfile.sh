@@ -16,12 +16,11 @@ fi
 
 
 # Either public network or private; chose according to argument 
-if [[ $1 == 'private']]
+if [[ $NET_OPT == 'private' ]] 
 then
-	VAGRANT_TEMPLATE_FILE=$gitmine/vagrant_template/Vagrantfile-centos7-en0
-elif [[ $1 == 'public']]
-then
-	VAGRANT_TEMPLATE_FILE=$gitmine/vagrant_template/Vagrantfile-centos7-private
+	VAGRANT_TEMPLATE_FILE=$gitmine/scripts/vagrant_template/Vagrantfile-centos7-en0
+else [[ $NET_OPT == 'public' ]]
+	VAGRANT_TEMPLATE_FILE=$gitmine/scripts/vagrant_template/Vagrantfile-centos7-private
 fi
 
 
