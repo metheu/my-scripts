@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 CURRENT_DIR="$(pwd)"
-VAGRANT_TEMPLATE_FILE=$gitmine/vagrant_template/Vagrantfile-centos7-en0
+SCRIPT_DIR=$gitmine/scripts/vagrant_template/
 NET_OPT=$1
 VM_NAME=$2
 IP_ADDR=$3
@@ -18,9 +18,9 @@ fi
 # Either public network or private; chose according to argument 
 if [[ $NET_OPT == 'private' ]] 
 then
-	VAGRANT_TEMPLATE_FILE=$gitmine/scripts/vagrant_template/Vagrantfile-centos7-private
+	VAGRANT_TEMPLATE_FILE=Vagrantfile-centos7-private
 else [[ $NET_OPT == 'public' ]]
-	VAGRANT_TEMPLATE_FILE=$gitmine/scripts/vagrant_template/Vagrantfile-centos7-en0
+	VAGRANT_TEMPLATE_FILE=Vagrantfile-centos7-en0
 fi
 
 
@@ -31,8 +31,8 @@ ssh-keygen -b 4096 -N '' -f $VM_NAME
 SSH_KEY="$(cat $VM_NAME.pub)"
 
 echo "Copy vagrantfile to current dir.. $CURRENT_DIR"
-cp -v $VAGRANT_TEMPLATE_FILE $CURRENT_DIR 
-mv -v Vagrantfile-centos7-en0 Vagrantfile
+cp -v $SCRIPT_DIR$VAGRANT_TEMPLATE_FILE $CURRENT_DIR 
+mv -v $VAGRANT_TEMPLATE_FILE Vagrantfile
 
 
 # The following commands are run on mac, and i want to use gnu sed, installed with brew
