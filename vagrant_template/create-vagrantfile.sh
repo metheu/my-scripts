@@ -2,26 +2,28 @@
 
 CURRENT_DIR="$(pwd)"
 SCRIPT_DIR=$gitmine/scripts/vagrant_template/
-NET_OPT=$1
+#NET_OPT=$1
+NUMBER_OF_MACHINES=$1
 VM_NAME=$2
-IP_ADDR=$3
+IP_ADDR_RANGE=$3
 VM_MEM=$4
+VAGRANT_TEMPLATE_FILE=vagrant_template_multi
 
 
 # Check if arguments are present
 if [[ -z $1 ]] || [[ -z $2 ]] || [[ -z $3 ]] || [[ -z $4 ]] 
 then
-	printf "One or more argument not given!\nExample: ./create-vagrantfile.sh <private or public net> <vm-name> <ip-address> <vm-memory>\n" && exit 1
+	printf "One or more argument not given!\nExample: ./create-vagrantfile.sh <number-of-machines> <vm-name> <ip-address-subnet> <vm-memory>\n" && exit 1
 fi
 
-
+# Commenting for now until the need arises for public ip clusters..
 # Either public network or private; chose according to argument 
-if [[ $NET_OPT == 'private' ]] 
-then
-	VAGRANT_TEMPLATE_FILE=Vagrantfile-centos7-private
-else [[ $NET_OPT == 'public' ]]
-	VAGRANT_TEMPLATE_FILE=Vagrantfile-centos7-en0
-fi
+#if [[ $NET_OPT == 'private' ]] 
+#then
+#	VAGRANT_TEMPLATE_FILE=Vagrantfile-centos7-private
+#else [[ $NET_OPT == 'public' ]]
+#	VAGRANT_TEMPLATE_FILE=Vagrantfile-centos7-en0
+#fi
 
 
 # Create the ssh keys
@@ -40,11 +42,14 @@ mv -v $VAGRANT_TEMPLATE_FILE Vagrantfile
 echo "Replace ssh key with generated one.."
 gsed -i.bak "s%SSH-KEY-GOES-HERE%$SSH_KEY%g" Vagrantfile
 
+echo "Adding number of machines in cluster.."
+gsed -i.bak "s%NUMBER-OF-MACHINES-GOES-HERE%$NUMBER_OF_MACHINES%g" Vagrantfile
+
 echo "Replacing vm-name and hostname.."
 gsed -i.bak "s/VM-NAME/$VM_NAME/g" Vagrantfile
 
 echo "replacing IP address.."
-gsed -i.bak "s/IP-ADDR-GOES-HERE/$IP_ADDR/g" Vagrantfile
+gsed -i.bak "s/IP-ADDR-GOES-HERE/$IP_ADDR_RANGE/g" Vagrantfile
 
 echo "entering memory for VM.."
 gsed -i.bak "s/MEM-GOES-HERE/$VM_MEM/g" Vagrantfile
