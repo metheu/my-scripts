@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 CURRENT_DIR="$(pwd)"
-SCRIPT_DIR=$gitmine/scripts/vagrant_template/
+SCRIPT_DIR=$git_mine/scripts/vagrant_template/
 #NET_OPT=$1
 NUMBER_OF_MACHINES=$1
 VM_NAME=$2
