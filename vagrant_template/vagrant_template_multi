@@ -2,11 +2,11 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-box_name = "bento/centos-7.7"
+box_name = "bento/rockylinux-8.6"
 
 # Machine Config
 base_ip = IP-ADDR-GOES-HERE
-base_ip_addresses = "192.168.50"
+base_ip_addresses = "192.168.56"
 number_of_machines = NUMBER-OF-MACHINES-GOES-HERE
 vm_name = "VM-NAME"
 vm_mem = MEM-GOES-HERE
